@@ -1,14 +1,3 @@
-Edited README.md
-Viewed README.md:73-102
-Ran command: `pip install deep-translator`
-Used tool: manage_task
-Created test_dt.py
-Ran command: `python test_dt.py`
-Ran command: `python -c "from deep_translator import single_detection; print(single_detection('Hola amigo', api_key=''))"`
-Edited app.py
-Edited requirements.txt
-
-```python
 import streamlit as st
 from deep_translator import GoogleTranslator
 import time
@@ -390,4 +379,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-```
