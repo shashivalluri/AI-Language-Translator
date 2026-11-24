@@ -7,14 +7,14 @@ import html
 # 1. Configuration & Setup
 # ==========================================
 st.set_page_config(
-    page_title="Translate Pro | Modern Language Translation",
+    page_title="Translate Pro | Awwwards Edition",
     page_icon="⚡",
     layout="wide",
     initial_sidebar_state="collapsed"
 )
 
 # Constants
-APP_VERSION = "2.0.0"
+APP_VERSION = "2.1.0"
 DEVELOPER = "Shashi Valluri"
 
 LANGUAGES = {
@@ -54,155 +54,435 @@ def init_state():
         st.session_state.translation_stats = None
 
 # ==========================================
-# 3. Custom CSS Injection
+# 3. Custom CSS — Awwwards Light Monochrome Design System
+#    Inter Tight · Tonal surfaces · 72px corners
 # ==========================================
 def inject_custom_css():
-    """Injects premium custom CSS for a modern SaaS look."""
     st.markdown("""
         <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-        
-        /* Typography */
-        html, body, [class*="css"] {
-            font-family: 'Inter', sans-serif !important;
+        /* ── FONTS ─────────────────────────────────── */
+        @import url('https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap');
+
+        /* ── BASE ───────────────────────────────────── */
+        html, body,
+        [class*="css"],
+        .stApp,
+        div[data-testid="stAppViewContainer"],
+        div[data-testid="stMain"],
+        section[data-testid="stSidebar"] {
+            font-family: 'Inter Tight', -apple-system, BlinkMacSystemFont, sans-serif !important;
+            background-color: #E9E9E9 !important;
+            color: #222222 !important;
         }
-        
-        /* Main Container */
+
+        header[data-testid="stHeader"] {
+            background-color: #E9E9E9 !important;
+            border-bottom: 1px solid #A7A7A7 !important;
+        }
+
+        /* hide the streamlit deploy/github icons for a cleaner look */
+        div[data-testid="stToolbar"] { display: none !important; }
+
         .block-container {
-            max-width: 1400px;
-            padding-top: 2rem;
-            padding-bottom: 3rem;
+            max-width: 1320px !important;
+            padding-top: 2rem !important;
+            padding-bottom: 4rem !important;
         }
-        
-        /* Hero Section */
+
+        /* ── HERO ───────────────────────────────────── */
+        .hero-wrap {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: #FFFFFF;
+            border: 1px solid #A7A7A7;
+            border-radius: 72px;
+            padding: 5px 20px;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 1.6px;
+            text-transform: uppercase;
+            color: #222222;
+            margin-bottom: 18px;
+        }
+
         .hero-title {
-            text-align: center;
-            font-weight: 800;
-            font-size: 3.5rem;
-            margin-bottom: 0.5rem;
-            background: linear-gradient(135deg, #4F46E5, #06B6D4);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            letter-spacing: -1px;
+            font-size: clamp(38px, 6vw, 76px);
+            font-weight: 600;
+            line-height: 1;
+            letter-spacing: -1.5px;
+            text-transform: uppercase;
+            color: #222222;
+            margin: 0 0 14px 0;
         }
+
         .hero-subtitle {
-            text-align: center;
-            color: #6B7280;
-            font-size: 1.15rem;
-            margin-bottom: 3rem;
-            font-weight: 400;
+            font-size: 16px;
+            font-weight: 300;
+            line-height: 1.65;
+            color: #4A4A4A;
+            max-width: 680px;
+            margin: 0 auto;
         }
-        
-        /* Card Styles */
-        .output-card, .history-card {
-            background-color: var(--secondary-background-color);
-            border-radius: 16px;
-            padding: 24px;
-            font-size: 1.05rem;
-            box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.05);
-            border: 1px solid rgba(128, 128, 128, 0.1);
-            color: var(--text-color);
+
+        /* ── PRIMARY BUTTON (Translate) ─────────────── */
+        button[kind="primary"],
+        button[data-testid="baseButton-primary"] {
+            background-color: #222222 !important;
+            color: #FFFFFF !important;
+            border: 1px solid #222222 !important;
+            border-radius: 8px !important;
+            font-family: 'Inter Tight', sans-serif !important;
+            font-size: 14px !important;
+            font-weight: 500 !important;
+            padding: 0 20px !important;
+            height: 42px !important;
+            box-shadow: none !important;
+            transition: background 0.3s ease, border-color 0.3s ease !important;
+            letter-spacing: 0.2px !important;
         }
-        .output-card {
-            min-height: 250px;
-            white-space: pre-wrap;
-            line-height: 1.6;
+        button[kind="primary"]:hover,
+        button[data-testid="baseButton-primary"]:hover {
+            background-color: #383838 !important;
+            border-color: #383838 !important;
         }
-        .history-card {
-            margin-bottom: 20px;
-            transition: all 0.3s ease;
-            background: var(--background-color);
+        button[kind="primary"]:active,
+        button[data-testid="baseButton-primary"]:active {
+            background-color: #111111 !important;
+            border-color: #111111 !important;
         }
-        .history-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 30px -5px rgba(0, 0, 0, 0.1);
-            border-color: rgba(79, 70, 229, 0.3);
+
+        /* ── SECONDARY BUTTON (Clear, Swap) ─────────── */
+        button[kind="secondary"],
+        button[data-testid="baseButton-secondary"] {
+            background-color: #FFF083 !important;
+            color: #222222 !important;
+            border: 1px solid #A7A7A7 !important;
+            border-radius: 8px !important;
+            font-family: 'Inter Tight', sans-serif !important;
+            font-size: 13px !important;
+            font-weight: 500 !important;
+            padding: 0 15.6px !important;
+            height: 42px !important;
+            box-shadow: none !important;
+            transition: background 0.3s ease, border-color 0.3s ease !important;
         }
-        
-        /* Text Area overriding */
+        button[kind="secondary"]:hover,
+        button[data-testid="baseButton-secondary"]:hover {
+            background-color: #F0D940 !important;
+            border-color: #222222 !important;
+        }
+
+        /* ── SELECTBOX ──────────────────────────────── */
+        div[data-baseweb="select"] > div {
+            background-color: #F8F8F8 !important;
+            border: 1px solid #A7A7A7 !important;
+            border-radius: 8px !important;
+            color: #222222 !important;
+            box-shadow: none !important;
+            min-height: 42px !important;
+            font-family: 'Inter Tight', sans-serif !important;
+            font-size: 13px !important;
+            transition: border-color 0.3s ease, background 0.3s ease !important;
+        }
+        div[data-baseweb="select"] > div:hover {
+            border-color: #222222 !important;
+            background-color: #FFFFFF !important;
+        }
+        div[data-baseweb="select"] span,
+        div[data-baseweb="select"] div {
+            color: #222222 !important;
+            font-family: 'Inter Tight', sans-serif !important;
+        }
+        div[data-baseweb="popover"],
+        div[data-baseweb="menu"],
+        ul[data-testid="stSelectboxVirtualDropdown"] {
+            background-color: #FFFFFF !important;
+            border: 1px solid #A7A7A7 !important;
+            border-radius: 8px !important;
+            box-shadow: none !important;
+        }
+        li[role="option"] {
+            color: #222222 !important;
+            font-family: 'Inter Tight', sans-serif !important;
+            font-size: 13px !important;
+            transition: background 0.2s ease !important;
+        }
+        li[role="option"]:hover,
+        li[role="option"][aria-selected="true"] {
+            background-color: #EDEDED !important;
+        }
+
+        /* ── TEXT AREA ──────────────────────────────── */
         .stTextArea textarea {
-            border-radius: 16px !important;
-            padding: 20px !important;
-            font-size: 1.05rem !important;
-            line-height: 1.6 !important;
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.02) !important;
-            transition: all 0.3s ease !important;
-            background-color: var(--background-color) !important;
+            background-color: #FFFFFF !important;
+            border: 1px solid #A7A7A7 !important;
+            border-radius: 12px !important;
+            color: #222222 !important;
+            font-family: 'Inter Tight', sans-serif !important;
+            font-size: 14px !important;
+            font-weight: 300 !important;
+            line-height: 2 !important;
+            padding: 18px !important;
+            box-shadow: none !important;
+            transition: border-color 0.3s ease !important;
             min-height: 250px !important;
         }
         .stTextArea textarea:focus {
-            border-color: #4F46E5 !important;
-            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15) !important;
+            border-color: #222222 !important;
+            box-shadow: 0 0 0 1px #222222 !important;
+            outline: none !important;
         }
-        
-        /* History Elements */
-        .history-meta {
-            font-size: 0.85rem;
-            color: #6B7280;
+        .stTextArea textarea::placeholder {
+            color: #999999 !important;
+            font-weight: 300 !important;
+        }
+
+        /* ── OUTPUT CARD ────────────────────────────── */
+        .output-card {
+            background-color: #F8F8F8;
+            border: 1px solid #A7A7A7;
+            border-radius: 12px;
+            padding: 22px 24px;
+            font-size: 14px;
+            font-weight: 300;
+            line-height: 2;
+            color: #222222;
+            min-height: 250px;
+            box-shadow: none;
+            white-space: pre-wrap;
+            transition: border-color 0.3s ease;
+            font-family: 'Inter Tight', sans-serif;
+        }
+
+        .output-placeholder {
+            color: #999999;
+            font-size: 13px;
+            font-weight: 300;
+            font-family: 'Inter Tight', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 210px;
+            letter-spacing: 0.3px;
+        }
+
+        /* ── SECTION PILL LABEL ─────────────────────── */
+        .section-pill {
+            display: inline-block;
+            background: #FFFFFF;
+            border: 1px solid #A7A7A7;
+            border-radius: 72px;
+            padding: 5px 18px;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 1.4px;
+            text-transform: uppercase;
+            color: #222222;
+            margin-bottom: 18px;
+        }
+
+        /* ── METRIC GRID ────────────────────────────── */
+        .metric-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin: 0 0 2rem 0;
+        }
+        @media (max-width: 860px) {
+            .metric-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 480px) {
+            .metric-grid { grid-template-columns: 1fr; }
+        }
+
+        .metric-card {
+            background-color: #F8F8F8;
+            border: 1px solid #A7A7A7;
+            border-radius: 72px;
+            padding: 18px 24px;
+            text-align: center;
+            transition: background 0.3s ease, border-color 0.3s ease;
+        }
+        .metric-card:hover {
+            background-color: #FFFFFF;
+            border-color: #222222;
+        }
+        .metric-label {
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 1.4px;
+            text-transform: uppercase;
+            color: #666666;
+            margin-bottom: 4px;
+            font-family: 'Inter Tight', sans-serif;
+        }
+        .metric-value {
+            font-size: 26px;
+            font-weight: 600;
+            color: #222222;
+            line-height: 1.1;
+            font-family: 'Inter Tight', sans-serif;
+        }
+
+        /* ── HISTORY CARD ───────────────────────────── */
+        .history-card {
+            background-color: #F8F8F8;
+            border: 1px solid #A7A7A7;
+            border-radius: 20px;
+            padding: 20px 24px;
             margin-bottom: 12px;
-            padding-bottom: 12px;
-            border-bottom: 1px solid rgba(128, 128, 128, 0.1);
+            transition: background 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+        }
+        .history-card:hover {
+            background-color: #FFFFFF;
+            border-color: #222222;
+            transform: translateY(-2px);
+        }
+
+        .history-header {
             display: flex;
             justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #A7A7A7;
         }
-        .history-text {
-            max-height: 120px;
+
+        .history-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background-color: #EDEDED;
+            border: 1px solid #A7A7A7;
+            border-radius: 72px;
+            padding: 4px 14px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: #222222;
+            font-family: 'Inter Tight', sans-serif;
+        }
+
+        .history-ts {
+            font-size: 12px;
+            font-weight: 300;
+            color: #666666;
+            font-family: 'Inter Tight', sans-serif;
+        }
+
+        .history-body {
+            display: flex;
+            gap: 24px;
+        }
+        @media (max-width: 768px) {
+            .history-body { flex-direction: column; gap: 10px; }
+        }
+
+        .history-col {
+            flex: 1;
+            font-size: 13px;
+            line-height: 2.15;
+            font-family: 'Inter Tight', sans-serif;
+            max-height: 110px;
             overflow-y: auto;
             white-space: pre-wrap;
-            padding-right: 10px;
         }
-        
-        @media (max-width: 768px) {
-            .history-flex {
-                flex-direction: column;
-                gap: 12px !important;
-            }
+        .history-col.src { color: #666666; font-weight: 300; }
+        .history-col.tgt { color: #222222; font-weight: 500; }
+
+        /* ── EXPANDER ───────────────────────────────── */
+        div[data-testid="stExpander"] {
+            background-color: #F8F8F8 !important;
+            border: 1px solid #A7A7A7 !important;
+            border-radius: 12px !important;
+            box-shadow: none !important;
+            margin-top: 10px !important;
         }
-        
-        /* Scrollbar styling */
-        ::-webkit-scrollbar {
-            width: 6px;
-            height: 6px;
+        div[data-testid="stExpander"] summary {
+            font-family: 'Inter Tight', sans-serif !important;
+            font-size: 13px !important;
+            font-weight: 400 !important;
+            color: #222222 !important;
         }
-        ::-webkit-scrollbar-track {
-            background: transparent;
+
+        /* ── ALERTS / INFO ──────────────────────────── */
+        div[data-testid="stAlert"] {
+            background-color: #F8F8F8 !important;
+            border: 1px solid #A7A7A7 !important;
+            border-radius: 12px !important;
+            box-shadow: none !important;
+            color: #222222 !important;
+            font-family: 'Inter Tight', sans-serif !important;
         }
-        ::-webkit-scrollbar-thumb {
-            background: #D1D5DB;
-            border-radius: 10px;
+
+        /* ── DIVIDER ────────────────────────────────── */
+        hr {
+            border: none !important;
+            border-top: 1px solid #A7A7A7 !important;
+            margin: 2.5rem 0 !important;
         }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #9CA3AF;
-        }
-        
-        /* Footer */
+
+        /* ── SCROLLBAR ──────────────────────────────── */
+        ::-webkit-scrollbar { width: 5px; height: 5px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #A7A7A7; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #666666; }
+
+        /* ── FOOTER ─────────────────────────────────── */
         .footer {
             text-align: center;
-            margin-top: 6rem;
+            margin-top: 4rem;
             padding-top: 2rem;
-            border-top: 1px solid rgba(128, 128, 128, 0.1);
-            color: #9CA3AF;
-            font-size: 0.9rem;
-            line-height: 1.8;
+            border-top: 1px solid #A7A7A7;
+            font-family: 'Inter Tight', sans-serif;
         }
+        .footer-pill {
+            display: inline-block;
+            background: #FFFFFF;
+            border: 1px solid #A7A7A7;
+            border-radius: 72px;
+            padding: 4px 16px;
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 1.4px;
+            text-transform: uppercase;
+            color: #222222;
+            margin-bottom: 10px;
+        }
+        .footer-body {
+            font-size: 13px;
+            font-weight: 300;
+            color: #555555;
+            line-height: 2.15;
+        }
+
+        /* ── CODE BLOCK ─────────────────────────────── */
+        div[data-testid="stCodeBlock"] {
+            border-radius: 8px !important;
+            border: 1px solid #A7A7A7 !important;
+        }
+
         </style>
     """, unsafe_allow_html=True)
+
 
 # ==========================================
 # 4. Core Logic & Helper Functions
 # ==========================================
 def get_translator(src_lang, tgt_lang):
-    """Initialize deep-translator instance."""
     return GoogleTranslator(source=src_lang, target=tgt_lang)
 
 def clear_text():
-    """Callback to clear the workspace."""
     st.session_state.input_text = ""
     st.session_state.translated_text = ""
     st.session_state.translation_stats = None
 
 def swap_languages():
-    """Callback to swap source and target languages."""
     src = st.session_state.source_lang
     tgt = st.session_state.target_lang
     if src != "Auto Detect":
@@ -212,49 +492,40 @@ def swap_languages():
         st.toast("Cannot swap when 'Auto Detect' is active.", icon="⚠️")
 
 def escape_html(text):
-    """Escapes HTML characters to prevent XSS in custom divs."""
     return html.escape(text)
 
 def perform_translation(text, src_lang, tgt_lang):
-    """Handles translation logic and updates session state."""
     start_time = time.time()
     try:
-        # Determine deep-translator language codes
         dt_src = LANGUAGES[src_lang]
         dt_tgt = LANGUAGES[tgt_lang]
-        
         translator = get_translator(dt_src, dt_tgt)
-        
-        # API Call
         translated_text = translator.translate(text)
         end_time = time.time()
-        
+
         st.session_state.translated_text = translated_text
-        
-        detected_lang_name = src_lang if src_lang != "Auto Detect" else "Auto (Detected by Engine)"
-                
-        # Generate statistics
+        detected = src_lang if src_lang != "Auto Detect" else "Auto"
+
         st.session_state.translation_stats = {
             "chars": len(text),
             "words": len(text.split()),
-            "detected": detected_lang_name,
+            "detected": detected,
             "time": round(end_time - start_time, 2)
         }
-        
-        # Save to history
-        new_entry = {
+
+        st.session_state.history.insert(0, {
             "source": text,
             "translated": translated_text,
             "src_lang": src_lang,
             "tgt_lang": tgt_lang,
             "time": time.strftime("%I:%M %p")
-        }
-        st.session_state.history.insert(0, new_entry)
-        st.session_state.history = st.session_state.history[:5]  # Keep last 5 in memory
-        
+        })
+        st.session_state.history = st.session_state.history[:5]
+
     except Exception as e:
         st.session_state.translated_text = f"Error: {str(e)}"
         st.session_state.translation_stats = None
+
 
 # ==========================================
 # 5. Main UI Application
@@ -263,44 +534,55 @@ def main():
     init_state()
     inject_custom_css()
 
-    # --- Hero Section ---
-    st.markdown('<div class="hero-title">Translate Pro</div>', unsafe_allow_html=True)
-    st.markdown('<div class="hero-subtitle">Fast, accurate, and seamless language translation for professionals.</div>', unsafe_allow_html=True)
+    # ── HERO ────────────────────────────────────────
+    st.markdown("""
+        <div class="hero-wrap">
+            <div class="hero-badge">Awwwards Design System &bull; Light Monochrome</div>
+            <h1 class="hero-title">Translate Pro</h1>
+            <p class="hero-subtitle">
+                High-precision neural language translation engine — editorial typography,
+                tonal surfaces, and instant multi-lingual intelligence.
+            </p>
+        </div>
+    """, unsafe_allow_html=True)
 
-    st.write("") # Spacing
-
-    # --- Main Workspace ---
+    # ── WORKSPACE ────────────────────────────────────
     with st.container():
-        # Toolbar Row
+        # Toolbar — language pickers + swap
         col_src, col_swap, col_tgt = st.columns([5, 1, 5], gap="small", vertical_alignment="center")
-        
+
         with col_src:
-            st.selectbox("Source Language", options=list(LANGUAGES.keys()), key="source_lang", label_visibility="collapsed")
-            
+            st.selectbox(
+                "Source Language",
+                options=list(LANGUAGES.keys()),
+                key="source_lang",
+                label_visibility="collapsed"
+            )
+
         with col_swap:
             st.button("⇄", on_click=swap_languages, help="Swap Languages", use_container_width=True)
-            
+
         with col_tgt:
-            target_opts = list(LANGUAGES.keys())
-            if "Auto Detect" in target_opts:
-                target_opts.remove("Auto Detect")
-            st.selectbox("Target Language", options=target_opts, key="target_lang", label_visibility="collapsed")
+            target_opts = [k for k in LANGUAGES if k != "Auto Detect"]
+            st.selectbox(
+                "Target Language",
+                options=target_opts,
+                key="target_lang",
+                label_visibility="collapsed"
+            )
 
-        st.write("") # Spacing
+        st.write("")
 
-        # Text Area Row
+        # Text areas
         text_col1, text_col2 = st.columns(2, gap="large")
-        
+
         with text_col1:
-            # Input Text Area
             st.text_area(
-                "Source Text", 
+                "Source Text",
                 key="input_text",
                 placeholder="Type or paste your text here to begin translation...",
                 label_visibility="collapsed"
             )
-            
-            # Action Buttons Below Input
             btn_col1, btn_col2, _ = st.columns([2, 2, 4])
             with btn_col1:
                 translate_clicked = st.button("✨ Translate", type="primary", use_container_width=True)
@@ -308,74 +590,101 @@ def main():
                 st.button("🗑️ Clear", on_click=clear_text, use_container_width=True)
 
         with text_col2:
-            # Execute Translation if button clicked
             if translate_clicked:
                 if st.session_state.input_text.strip():
-                    with st.spinner("Translating via AI..."):
+                    with st.spinner("Translating..."):
                         perform_translation(
-                            st.session_state.input_text, 
-                            st.session_state.source_lang, 
+                            st.session_state.input_text,
+                            st.session_state.source_lang,
                             st.session_state.target_lang
                         )
                 else:
                     st.warning("⚠️ Please enter text to translate.")
 
-            # Render Output Area
             if st.session_state.translated_text == "":
-                st.markdown('<div class="output-card" style="color: #9CA3AF; display: flex; align-items: center; justify-content: center; height: 100%;">Translation will appear here...</div>', unsafe_allow_html=True)
+                st.markdown(
+                    '<div class="output-card">'
+                    '<div class="output-placeholder">Translation will appear here...</div>'
+                    '</div>',
+                    unsafe_allow_html=True
+                )
             elif st.session_state.translated_text.startswith("Error:"):
                 st.error(st.session_state.translated_text)
             else:
-                safe_output = escape_html(st.session_state.translated_text)
-                st.markdown(f'<div class="output-card">{safe_output}</div>', unsafe_allow_html=True)
-                
-                # Copy utility via expander natively in Streamlit
+                safe_out = escape_html(st.session_state.translated_text)
+                st.markdown(f'<div class="output-card">{safe_out}</div>', unsafe_allow_html=True)
                 with st.expander("📋 Click to Copy / View Raw Text"):
                     st.code(st.session_state.translated_text, language=None)
 
-    # --- Statistics Section ---
-    st.write("")
+    # ── STATISTICS ───────────────────────────────────
     if st.session_state.translation_stats:
         stats = st.session_state.translation_stats
-        st.markdown("### 📊 Translation Dashboard")
-        s1, s2, s3, s4 = st.columns(4)
-        s1.metric("Characters", stats["chars"])
-        s2.metric("Words", stats["words"])
-        s3.metric("Detected Language", stats["detected"])
-        s4.metric("Translation Count", len(st.session_state.history))
+        st.write("")
+        st.markdown('<div class="section-pill">Translation Dashboard</div>', unsafe_allow_html=True)
+
+        metric_html = f"""
+        <div class="metric-grid">
+            <div class="metric-card">
+                <div class="metric-label">Characters</div>
+                <div class="metric-value">{stats["chars"]}</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Words</div>
+                <div class="metric-value">{stats["words"]}</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Detected</div>
+                <div class="metric-value" style="font-size:17px;">{stats["detected"]}</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Time (sec)</div>
+                <div class="metric-value">{stats["time"]}s</div>
+            </div>
+        </div>
+        """
+        st.markdown(metric_html, unsafe_allow_html=True)
 
     st.divider()
 
-    # --- Translation History ---
-    st.markdown("### 🕒 Translation History")
+    # ── HISTORY ──────────────────────────────────────
+    st.markdown('<div class="section-pill">Translation History</div>', unsafe_allow_html=True)
+
     if not st.session_state.history:
         st.info("Your recent translations will appear here.")
     else:
         for item in st.session_state.history:
-            safe_source = escape_html(item['source'])
-            safe_translated = escape_html(item['translated'])
-            
+            safe_src = escape_html(item["source"])
+            safe_tgt = escape_html(item["translated"])
+
             card_html = f"""
             <div class="history-card">
-                <div class="history-meta">
-                    <span><strong>{item['src_lang']}</strong> ➔ <strong>{item['tgt_lang']}</strong></span>
-                    <span>{item['time']}</span>
+                <div class="history-header">
+                    <div class="history-pill">
+                        {item["src_lang"]}
+                        <span style="color:#A7A7A7;">&rarr;</span>
+                        {item["tgt_lang"]}
+                    </div>
+                    <div class="history-ts">{item["time"]}</div>
                 </div>
-                <div class="history-flex" style="display: flex; gap: 24px;">
-                    <div style="flex: 1; color: #6B7280;" class="history-text">{safe_source}</div>
-                    <div style="flex: 1; font-weight: 500;" class="history-text">{safe_translated}</div>
+                <div class="history-body">
+                    <div class="history-col src">{safe_src}</div>
+                    <div class="history-col tgt">{safe_tgt}</div>
                 </div>
             </div>
             """
             st.markdown(card_html, unsafe_allow_html=True)
 
-    # --- Footer ---
+    # ── FOOTER ───────────────────────────────────────
     st.markdown(f"""
     <div class="footer">
-        <p><strong>Translate Pro</strong> v{APP_VERSION} &copy; 2026</p>
-        <p>Developed with ❤️ by <strong>{DEVELOPER}</strong></p>
+        <div class="footer-pill">Awwwards · Light Monochrome Edition</div>
+        <div class="footer-body">
+            <strong>Translate Pro</strong> v{APP_VERSION} &copy; 2026<br>
+            Developed with precision by <strong>{DEVELOPER}</strong>
+        </div>
     </div>
     """, unsafe_allow_html=True)
+
 
 if __name__ == "__main__":
     main()

@@ -1,38 +1,117 @@
-# 🌍 Language Translation Tool
+# 🌍 AI Language Translator
 
-A professional, easy-to-use language translation application built using Python, Streamlit, and Googletrans.
+A modern and professional language translation web application built using **Python**, **Streamlit**, and **Googletrans**. The application allows users to translate text between multiple languages instantly with a clean and user-friendly interface.
 
-## ✨ Features
+---
 
-- **Multi-Language Support**: Translate text between numerous languages seamlessly.
-- **Auto-Detect Language**: Automatically detect the source language without needing to select it.
-- **Swap Languages**: One-click button to swap source and target languages.
-- **Translation History**: Keeps track of your last 5 translations during the active session.
-- **Copy-Friendly Output**: Instantly copy translated text with a built-in copy button.
-- **Character Counter**: Real-time character count for your input text.
-- **Clean UI/UX**: Modern and responsive interface for a better user experience.
+## 🚀 Features
 
-## 🚀 Technologies Used
+* 🌐 Multi-Language Translation
+* 🤖 Auto Language Detection
+* 🔄 One-Click Language Swap
+* 🕒 Translation History
+* 📊 Character Counter
+* 📝 Word Counter
+* 📋 Copy-Friendly Translation Output
+* ⚡ Fast Translation Processing
+* 🎨 Modern SaaS-Inspired User Interface
+* 📱 Responsive Layout
 
-- Python 3.12+
-- [Streamlit](https://streamlit.io/) (for the web interface)
-- [Googletrans](https://py-googletrans.readthedocs.io/en/latest/) (for translation API)
+---
 
-## 🛠️ Installation & Setup
+## 🛠️ Technologies Used
 
-1. **Clone or Download** the repository.
-2. **Install Requirements**:
-   ```bash
-   pip install -r requirements.txt
-   ```
-3. **Run the Application**:
-   ```bash
-   py -3.12 -m streamlit run app.py
-   ```
-   *(Or simply `streamlit run app.py` depending on your Python setup)*
+* Python 3.12+
+* Streamlit
+* Googletrans
+
+---
 
 ## 📂 Project Structure
 
-- `app.py`: The main Streamlit application file containing UI and logic.
-- `requirements.txt`: Python dependencies required to run the app.
-- `README.md`: Project documentation.
+```text
+AI-Language-Translator
+│
+├── app.py
+├── requirements.txt
+├── README.md
+└── .venv
+```
+
+---
+
+## ⚙️ Installation
+
+### 1. Clone the Repository
+
+```bash
+git clone <repository-url>
+```
+
+### 2. Navigate to the Project Folder
+
+```bash
+cd AI-Language-Translator
+```
+
+### 3. Install Dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+### 4. Run the Application
+
+```bash
+py -3.12 -m streamlit run app.py
+```
+
+---
+
+## 📸 Application Preview
+
+Add screenshots of the application here after deployment.
+
+---
+
+## ✨ Key Functionalities
+
+### Auto Language Detection
+
+The application automatically detects the source language when users choose the Auto Detect option.
+
+### Translation History
+
+Stores recent translations during the active session for quick reference.
+
+### Character & Word Analytics
+
+Displays character count and word count for the entered text.
+
+### Modern User Experience
+
+Designed with a clean and professional interface inspired by modern SaaS products.
+
+---
+
+## 🌟 Future Enhancements
+
+* Voice Input Translation
+* Text-to-Speech Output
+* Download Translation as PDF
+* Dark/Light Theme Toggle
+* Translation Analytics Dashboard
+
+---
+
+## 👨‍💻 Author
+
+**Shashi Valluri**
+
+Built with Python and Streamlit.
+
+---
+
+## 📄 License
+
+This project is intended for educational and learning purposes.
